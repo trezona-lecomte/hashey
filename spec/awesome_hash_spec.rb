@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'awesome_hash'
 require 'byebug'
+require 'faker'
 
 RSpec.describe Hash do
   let(:hash) { AwesomeHash.new }
@@ -41,6 +42,25 @@ RSpec.describe Hash do
 
       it 'returns the second value for the second key' do
         expect(hash['key_first']).to eq('second_value')
+      end
+    end
+
+    context 'when the entries / buckets is > 0.75' do
+      before do
+        12.times do
+          key_str = Faker::Lorem.characters(10)
+          value_str = Faker::Lorem.characters(10)
+
+          hash[key_str] = value_str
+        end
+      end
+
+      it 'doubles the number of buckets' do
+        expect(hash.buckets.size).to eq(16)
+
+        hash['13th key'] = '13th value'
+
+        expect(hash.buckets.size).to eq(32)
       end
     end
   end
