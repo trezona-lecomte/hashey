@@ -16,7 +16,11 @@ class AwesomeHash
   end
 
   def [](key)
-    @values[hash(key)].select { |k, v| k == key }[0][1]
+    target_bucket = @values[hash(key)]
+
+    target_pair = target_bucket.find { |k, v| k == key }
+
+    target_pair[1]
   end
 
   def hash(str)
