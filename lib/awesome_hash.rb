@@ -1,5 +1,5 @@
 class AwesomeHash
-  attr_accessor :values
+  attr_reader :values
 
   def initialize
     @values = []
